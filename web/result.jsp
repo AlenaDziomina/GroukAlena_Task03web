@@ -18,6 +18,8 @@
                         <td>${cell.id}</td>
                         <td>${cell.getClass().getSimpleName()}</td>
                         <td>${cell.name}</td>
+                        <td>${cell.manufacturer}</td>
+                        <td>${cell.weight}</td>
                         <td>${cell.price}</td>
                         
                     </tr>

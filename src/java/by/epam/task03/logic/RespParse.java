@@ -4,17 +4,17 @@
  * and open the template in the editor.
  */
 
-package by.epam.task03web.controller;
+package by.epam.task03.logic;
 
 import by.epam.task03.entity.MotoEquipment;
 import by.epam.task03.exeption.NullInitException;
 import by.epam.task03.exeption.ValidatingException;
-import by.epam.task03.logic.AbstractEquipBuilder;
 import static by.epam.task03.logic.EquipBuilderFactory.createStudentBuilder;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
-import java.util.Enumeration;
+import java.net.URLDecoder;
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,20 +31,33 @@ public class RespParse {
     HttpServletResponse response;
     
      
-    RespParse(HttpServletRequest request, HttpServletResponse response) {
+    public RespParse(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;
         this.response = response;
     }
 
-    void getResponse() throws NullInitException, ValidatingException {
+    public void getResponse() throws NullInitException, ValidatingException {
         
         request.removeAttribute("errors");
        
         String strParser = request.getParameter("parser");
         request.setAttribute("parsername", strParser);
         
+        
+        
+        
         String str = System.getProperty("user.home");
         String path = str+"/NetBeansProjects/Task03web/";
+        
+        URL pathURL = AbstractEquipBuilder.class.getProtectionDomain().getCodeSource().getLocation();
+        try {
+            String classFile = URLDecoder.decode(pathURL.getFile().substring(1).replace('/', File.separatorChar),
+                    Charset.defaultCharset().name());
+            String propertiesFile = classFile.replace(".jar", ".properties");
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(RespParse.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         
         AbstractEquipBuilder builder;
         builder = createStudentBuilder(strParser);

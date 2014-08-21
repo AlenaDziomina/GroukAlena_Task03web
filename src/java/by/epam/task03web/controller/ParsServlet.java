@@ -6,11 +6,13 @@ package by.epam.task03web.controller;
  * and open the template in the editor.
  */
 
+import by.epam.task03.logic.RespParse;
 import by.epam.task03.exeption.NullInitException;
 import by.epam.task03.exeption.ValidatingException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -42,6 +44,8 @@ public class ParsServlet extends HttpServlet {
             throws ServletException, IOException {
  
         Map<String, String> errors = new HashMap<>();
+        ServletContext sc = getServletContext();        
+        
         try {
             
             RespParse resp = new RespParse(request, response);
