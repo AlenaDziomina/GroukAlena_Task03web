@@ -6,12 +6,9 @@ package by.epam.task03web.controller;
  * and open the template in the editor.
  */
 
+import by.epam.task03.exeption.ProjectException;
 import by.epam.task03.logic.RespParse;
-import by.epam.task03.exeption.NullInitException;
-import by.epam.task03.exeption.ValidatingException;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -25,9 +22,12 @@ import org.apache.log4j.PropertyConfigurator;
  * @author Helena.Grouk
  */
 public class ParsServlet extends HttpServlet {
-    static final String LOG_PROPERTIES_FILE = "Log4J.properties";
+    static final String LOG_PROPERTIES_FILE = "/resource/Log4J.properties";
+    static final String XML_FILE = "/resource/equip_test.xml";
     static {
-        PropertyConfigurator.configure(LOG_PROPERTIES_FILE);
+        
+        String path = System.getProperty("user.home")+"/NetBeansProjects/Task03web/";
+        PropertyConfigurator.configure(path+LOG_PROPERTIES_FILE);
     }
     public static Logger localLog = Logger.getLogger("localLoger");
 
@@ -42,25 +42,18 @@ public class ParsServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
- 
-        Map<String, String> errors = new HashMap<>();
-        ServletContext sc = getServletContext();        
+   
+        ServletContext sc = getServletContext();
+        String str = sc.getRealPath(LOG_PROPERTIES_FILE);
+        String str2 = sc.getRealPath(XML_FILE);
         
         try {
             
             RespParse resp = new RespParse(request, response);
-            resp.getResponse();
+            resp.processRequest(str2);
             request.getRequestDispatcher("result.jsp").forward(request, response);
             
-        } catch (NullInitException ex) {
-            String msg = ex.getMessage();
-            errors.put("parser", ex.getMessage());
-            request.setAttribute("errors", errors);
-            request.getRequestDispatcher("index.jsp").forward(request, response);
-        } catch (ValidatingException ex) {
-            String msg = ex.getMessage();
-            errors.put("parsername", ex.getMessage());
-            request.setAttribute("errors", errors);
+        } catch (ProjectException ex) {
             request.getRequestDispatcher("index.jsp").forward(request, response);
         }
         

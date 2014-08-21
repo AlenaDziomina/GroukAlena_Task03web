@@ -16,7 +16,7 @@ public class ValidatingException extends ProjectException {
     
     public ValidatingException(){}
     public ValidatingException(String msg) {
-        this.msg = msg;
+        super(msg);
         localLog.error("ValidatingException " + msg);
     }
     

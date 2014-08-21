@@ -6,7 +6,7 @@
 
 package by.epam.task03.logic;
 
-import by.epam.task03.exeption.NullInitException;
+import by.epam.task03.exeption.EntityInitException;
 import by.epam.task03.exeption.ValidatingException;
 import org.apache.commons.lang3.EnumUtils;
 
@@ -17,7 +17,7 @@ import org.apache.commons.lang3.EnumUtils;
 public abstract class EquipBuilderFactory {
     
     private enum TypeParser { SAX, STAX, DOM }
-    public static AbstractEquipBuilder createStudentBuilder(String typeParser) throws NullInitException, ValidatingException {
+    public static AbstractEquipBuilder createStudentBuilder(String typeParser) throws EntityInitException, ValidatingException {
         if (EnumUtils.isValidEnum(TypeParser.class, typeParser.toUpperCase())) {
             TypeParser type = TypeParser.valueOf(typeParser.toUpperCase());
             switch (type) {

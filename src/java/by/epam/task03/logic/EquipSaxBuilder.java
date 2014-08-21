@@ -6,7 +6,7 @@
 
 package by.epam.task03.logic;
 
-import by.epam.task03.exeption.NullInitException;
+import by.epam.task03.exeption.EntityInitException;
 import by.epam.task03.exeption.ProjectException;
 import by.epam.task03.entity.MotoEquip;
 import by.epam.task03.entity.MotoEquipment;
@@ -31,28 +31,28 @@ public class EquipSaxBuilder extends AbstractEquipBuilder {
     private final EquipHandler eqh;
     private XMLReader reader;
     
-    public EquipSaxBuilder() throws NullInitException{
+    public EquipSaxBuilder() throws EntityInitException{
         eqh = new EquipHandler();
         try {
             reader = XMLReaderFactory.createXMLReader();
             reader.setContentHandler(eqh);
         } catch (SAXException ex) {
-            throw new NullInitException("Error of SAX parsing configuration: " + ex);
+            throw new EntityInitException("Error of SAX parsing configuration: " + ex);
         }
     }
     
     @Override
-    public void buildSetEquip(String fileName) throws NullInitException {
+    public void buildSetEquip(String fileName) throws EntityInitException {
         try {
             // разбор XML-документа
             reader.parse(fileName);
             equip = eqh.getEquip();
         }
         catch (SAXException e) {
-            throw new NullInitException("Parsing SAX failure: " + e);
+            throw new EntityInitException("Parsing SAX failure: " + e);
         }
         catch (IOException e) {
-            throw new NullInitException("File error or I/O error: " + e);
+            throw new EntityInitException("File error or I/O error: " + e);
         }
     }
     

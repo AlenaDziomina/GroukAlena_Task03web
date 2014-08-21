@@ -15,12 +15,12 @@ import static by.epam.task03web.controller.ParsServlet.localLog;
  *
  * @author Helena.Grouk
  */
-public class NullInitException extends ProjectException {
+public class EntityInitException extends ProjectException {
 
-    public NullInitException(){}
+    public EntityInitException(){}
     
-    public NullInitException(String msg) {
-        this.msg = msg;
+    public EntityInitException(String msg) {
+        super(msg);
         localLog.error("NullInitException " + msg);
         localLog.info(this.getStackTrace());
     }

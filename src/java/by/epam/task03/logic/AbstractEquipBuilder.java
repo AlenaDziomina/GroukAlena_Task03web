@@ -6,7 +6,7 @@
 
 package by.epam.task03.logic;
 
-import by.epam.task03.exeption.NullInitException;
+import by.epam.task03.exeption.EntityInitException;
 import by.epam.task03.entity.MotoEquip;
 
 /**
@@ -26,7 +26,7 @@ public abstract class AbstractEquipBuilder {
     public MotoEquip getEquip() {
         return equip;
     }
-    abstract public void buildSetEquip(String fileName) throws NullInitException;
+    abstract public void buildSetEquip(String fileName) throws EntityInitException;
     
     protected enum EquipEnum {
         ARMOR_JACKET("ArmorJacket"),

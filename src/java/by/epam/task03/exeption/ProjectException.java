@@ -16,18 +16,14 @@ import static by.epam.task03web.controller.ParsServlet.localLog;
  */
 public class ProjectException extends Exception{
     
-    protected String msg;
+    
     
     public ProjectException(){}
 
     public ProjectException(String msg) {
-        this.msg = msg;
+        super(msg);
         localLog.error("ProjectException: " + msg);
         localLog.info(this.getStackTrace());
     }
-    
-    @Override
-    public String getMessage(){
-        return msg;
-    }
+   
 }

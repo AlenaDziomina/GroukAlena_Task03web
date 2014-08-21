@@ -6,7 +6,7 @@
 
 package by.epam.task03.logic;
 
-import by.epam.task03.exeption.NullInitException;
+import by.epam.task03.exeption.EntityInitException;
 import by.epam.task03.exeption.ProjectException;
 import by.epam.task03.entity.MotoEquipment;
 import static by.epam.task03web.controller.ParsServlet.localLog;
@@ -39,7 +39,7 @@ public class EquipStaxBuilder extends AbstractEquipBuilder {
     }
     
     @Override
-    public void buildSetEquip(String fileName) throws NullInitException {
+    public void buildSetEquip(String fileName) throws EntityInitException {
         FileInputStream inputStream = null;
         XMLStreamReader reader;
         String name;
@@ -64,9 +64,9 @@ public class EquipStaxBuilder extends AbstractEquipBuilder {
                 }
             }
         } catch (XMLStreamException ex) {
-            throw new NullInitException("StAX parsing error! " + ex.getMessage());
+            throw new EntityInitException("StAX parsing error! " + ex.getMessage());
         } catch (FileNotFoundException ex) {
-            throw new NullInitException("File " + fileName + " not found! " + ex);
+            throw new EntityInitException("File " + fileName + " not found! " + ex);
         } finally {
             try {
                 if(inputStream != null ) {
@@ -74,7 +74,7 @@ public class EquipStaxBuilder extends AbstractEquipBuilder {
                 }
             }
             catch (IOException e) {
-                throw new NullInitException("Impossible close file "+fileName+" : "+e);
+                throw new EntityInitException("Impossible close file "+fileName+" : "+e);
             }
         }
     }

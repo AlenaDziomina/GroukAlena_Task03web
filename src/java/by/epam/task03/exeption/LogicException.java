@@ -23,14 +23,15 @@ public class LogicException extends ProjectException {
     public LogicException(){}
     
     public LogicException(String msg) {
-        this.msg = msg;
+        super(msg);
         localLog.error("LogicException " + msg);
         localLog.info(this.getStackTrace());
     }
     
     public LogicException(String msg, Exception ex) {
+        
+        super(msg);
         this.ex = ex;
-        this.msg = msg;
         localLog.error("LogicException " + msg);
         localLog.info(this.getStackTrace());
         localLog.info(ex.getMessage(), ex);

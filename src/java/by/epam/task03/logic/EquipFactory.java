@@ -8,7 +8,7 @@ package by.epam.task03.logic;
 
 
 import by.epam.task03.exeption.LogicException;
-import by.epam.task03.exeption.NullInitException;
+import by.epam.task03.exeption.EntityInitException;
 import by.epam.task03.entity.MotoEquipment;
 import static by.epam.task03web.controller.ParsServlet.localLog;
 import java.lang.reflect.Constructor;
@@ -26,7 +26,7 @@ public class EquipFactory {
     
     private static final String PATH = MotoEquipment.class.getPackage().getName();
     
-    public static MotoEquipment equipmentCreator(String[]... args) throws NullInitException, LogicException {
+    public static MotoEquipment equipmentCreator(String[]... args) throws EntityInitException, LogicException {
         
         String className = findClassName(args);
         int id = findId(args);
@@ -38,7 +38,7 @@ public class EquipFactory {
             if (!"class".equals(arg[0]) && !"name".equals(arg[0])  && !"id".equals(arg[0])) {
                 try {
                     setProperties(newEq, arg);
-                } catch (NullInitException | LogicException ex) {
+                } catch (EntityInitException | LogicException ex) {
                     localLog.error("Set equip property fail.");
                 }
             }
@@ -47,39 +47,39 @@ public class EquipFactory {
         return newEq;
     }
     
-    private static String findClassName(String[]... args) throws NullInitException {
+    private static String findClassName(String[]... args) throws EntityInitException {
         
         for (String[] arg : args) {
             if ("class".equals(arg[0]) && arg.length >= 2) {
                 return arg[1];
             }
         }
-        throw new NullInitException("EquipFactory: can't find class "+args[0][0] +"."); 
+        throw new EntityInitException("EquipFactory: can't find class "+args[0][0] +"."); 
     }
     
-    private static int findId(String[]... args) throws NullInitException {
+    private static int findId(String[]... args) throws EntityInitException {
         for (String[] arg : args) {
             if ("id".equals(arg[0]) && arg.length >= 2) {
                 return Integer.parseInt(arg[1]);
             }
         }
-        throw new NullInitException("EquipFactory: can't find id.");
+        throw new EntityInitException("EquipFactory: can't find id.");
     }
 
-    private static String findName(String[][] args) throws NullInitException {
+    private static String findName(String[][] args) throws EntityInitException {
         for (String[] arg : args) {
             if ("name".equals(arg[0]) && arg.length >= 2) {
                 return arg[1];
             }
         }
-        throw new NullInitException("EquipFactory: can't find name.");
+        throw new EntityInitException("EquipFactory: can't find name.");
     }
 
         
-    private static MotoEquipment buildEquip(String className, int objId, String objName) throws NullInitException, LogicException {
+    private static MotoEquipment buildEquip(String className, int objId, String objName) throws EntityInitException, LogicException {
 
         if (className == null || className.isEmpty()) {
-                throw new NullInitException("BuildObj: className == null or emoty.");
+                throw new EntityInitException("BuildObj: className == null or emoty.");
         }
         
         try {    
@@ -92,11 +92,11 @@ public class EquipFactory {
         }
     }
     
-    private static void setProperties(MotoEquipment obj, String[] arg) throws NullInitException, LogicException {
+    private static void setProperties(MotoEquipment obj, String[] arg) throws EntityInitException, LogicException {
         
         
         if(arg == null || arg.length < 3) {
-            throw new NullInitException("SetProperties: arg == null.");
+            throw new EntityInitException("SetProperties: arg == null.");
         }
         
         Object val = factoryConvertor(arg[1], arg[2]);
@@ -117,10 +117,10 @@ public class EquipFactory {
 
     }
 
-    private static Object factoryConvertor(String var, String valType) throws NullInitException {
+    private static Object factoryConvertor(String var, String valType) throws EntityInitException {
         
         if (valType == null || valType.isEmpty() || var == null || var.isEmpty()) {
-            throw new NullInitException("FactoryConvertor: property += null or empty.");
+            throw new EntityInitException("FactoryConvertor: property += null or empty.");
         }
         
         valType = valType.toLowerCase();

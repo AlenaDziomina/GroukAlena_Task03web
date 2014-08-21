@@ -7,7 +7,7 @@
 package by.epam.task03.logic;
 
 import by.epam.task03.entity.MotoEquipment;
-import by.epam.task03.exeption.NullInitException;
+import by.epam.task03.exeption.EntityInitException;
 import by.epam.task03.exeption.ProjectException;
 import static by.epam.task03web.controller.ParsServlet.localLog;
 import java.io.IOException;
@@ -36,19 +36,19 @@ public final class EquipDomBuilder extends AbstractEquipBuilder {
     private String[] currentProp;
     private ArrayList<String[]> atrs;
     
-    public EquipDomBuilder() throws NullInitException {
+    public EquipDomBuilder() throws EntityInitException {
         atrs = new ArrayList<>();
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
             docBuilder = factory.newDocumentBuilder();
         }
         catch (ParserConfigurationException e) {
-            throw new NullInitException("Error of parsing configuration: " + e);
+            throw new EntityInitException("Error of parsing configuration: " + e);
         }
     }
 
     @Override
-    public void buildSetEquip(String fileName) throws NullInitException {
+    public void buildSetEquip(String fileName) throws EntityInitException {
         Document doc;
         String name;
         try {
@@ -73,10 +73,10 @@ public final class EquipDomBuilder extends AbstractEquipBuilder {
             }
         }
         catch (IOException e) {
-            throw new NullInitException("File error or I/O error: " + e);
+            throw new EntityInitException("File error or I/O error: " + e);
         }
         catch (SAXException e) {
-            throw new NullInitException("Parsing failure: " + e);
+            throw new EntityInitException("Parsing failure: " + e);
         }
     }
 
