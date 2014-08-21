@@ -39,6 +39,8 @@ table {
     height: auto;
 }
 
+
+
 #header {
     text-align: center;
     margin: 20px auto;
@@ -94,6 +96,12 @@ table {
     margin-left: 50px;
 }
 
+#er {
+    font-size: 10px;
+    color:rgb(255,62,62);
+}
+
+
 .categoryButton {
     width: 750px;
     height: 60px;
@@ -102,4 +110,5 @@ table {
     display: block;
     background-color: #d3ede8;
 }
+
 

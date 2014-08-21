@@ -7,7 +7,7 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
     <body>
-        <h1 id="header">RESULT</h1>
+        <h1 id="header">RESULT of ${parsername} parser:</h1>
         
         
         

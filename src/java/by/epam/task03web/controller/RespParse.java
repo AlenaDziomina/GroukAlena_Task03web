@@ -44,8 +44,4 @@ public class RespParse {
         request.setAttribute("equip", equip);
     }
 
-    
-    
-    
-    
 }

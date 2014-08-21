@@ -10,11 +10,11 @@
         <form action="ParsServlet" method="POST">
             <div id="parserName">  
                 <input  type="text" name="parser" value="${parsername}" size="20" />   
-                <span class="error">${errors.parsername}</span>
+                <span id="er">${errors.parsername}</span>
             </div>
             <div id="categoryButton">
                 <input type="submit" value="Parse">  
-                <span class="error">${errors.parser}</span>
+                <div id="er">${errors.parser}</div>
             </div>
 
         </form>
