@@ -44,9 +44,15 @@
                 <element name="weight" type="float"></element>                  
                 <element name="base-material" type="string"></element>
             </sequence>
-            <attribute name="id_s" type="ID" use="required"/>
+            <attribute name="id_s" type="ID_S" use="required"/>
             <attribute name="name" type="string" use="required"/>
         </complexType>
+        
+        <simpleType name="ID_S">
+            <restriction base="ID">
+                <pattern value="id\d+"/>
+            </restriction>
+        </simpleType>
         
         <complexType name="SpecialMotoEquipment">
             <complexContent>
