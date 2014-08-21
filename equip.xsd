@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://epam.by/motoequip"
+        xmlns:tns="http://epam.by/motoequip"
+            elementFormDefault="qualified">
+        <element name="moto-equip">
+            <complexType>
+                <sequence>
+                    <element ref="tns:moto-equipment"
+                            minOccurs="1"
+                            maxOccurs="unbounded"/>
+                </sequence>
+            </complexType>
+        </element>
+        
+        <element name="moto-equipment" type="tns:MotoEquipment" abstract="true"></element>
+        <element name="base-moto-equipment" type="tns:BaseMotoEquipment" abstract="true"></element>
+        <element name="special-moto-equipment" type="tns:SpecialMotoEquipment" abstract="true"></element>
+        <element name="main-equip" type="tns:MainEquip" abstract="true"></element>
+        <element name="additional-equip" type="tns:AdditionalEquip" abstract="true"></element>
+        <element name="body-protection" type="tns:BodyProtection" abstract="true"></element>
+        <element name="built-in-body-protection" type="tns:BuiltInBodyProtection" abstract="true"></element>
+        <element name="separate-body-protection" type="tns:SeparateBodyProtection" abstract="true"></element>
+        <element name="helmet" type="tns:Helmet" substitutionGroup="tns:moto-equipment"></element>
+        <element name="shoes" type="tns:Shoes" substitutionGroup="tns:moto-equipment"></element>
+        <element name="jacket" type="tns:Jacket" substitutionGroup="tns:moto-equipment"></element>
+        <element name="pants" type="tns:Pants" substitutionGroup="tns:moto-equipment"></element>
+        <element name="gloves" type="tns:Gloves" substitutionGroup="tns:moto-equipment"></element>
+        <element name="armor-jacket" type="tns:ArmorJacket" substitutionGroup="tns:moto-equipment"></element>
+        <element name="elbow-protector" type="tns:ElbowProtector" substitutionGroup="tns:moto-equipment"></element>
+        <element name="knee-protector" type="tns:KneeProtector" substitutionGroup="tns:moto-equipment"></element>
+        <element name="termolinen" type="tns:Termolinen" substitutionGroup="tns:moto-equipment"></element>
+        <element name="slicker" type="tns:Slicker" substitutionGroup="tns:moto-equipment"></element>
+        <element name="balaclava" type="tns:Balaclava" substitutionGroup="tns:moto-equipment"></element>
+        <element name="protector-insert" type="tns:ProtectorInsert" substitutionGroup="tns:moto-equipment"></element>
+        <element name="sliders" type="tns:Sliders" substitutionGroup="tns:moto-equipment"></element>
+        <element name="visor" type="tns:Visor" substitutionGroup="tns:moto-equipment"></element>
+        
+        <complexType name="MotoEquipment">
+            <sequence>
+                <element name="id" type="integer"></element>
+                <element name="manufacturer" type="string"></element>
+                <element name="price" type="positiveInteger"></element>
+                <element name="weight" type="float"></element>                  
+                <element name="base-material" type="string"></element>
+            </sequence>
+            <attribute name="id_s" type="ID" use="required"/>
+            <attribute name="name" type="string" use="required"/>
+        </complexType>
+        
+        <complexType name="SpecialMotoEquipment">
+            <complexContent>
+                <extension base="tns:MotoEquipment">
+                    <sequence>
+                        <element name="for-what">
+                            <complexType>
+                                <sequence>
+                                    <element ref="tns:base-moto-equipment"
+                                            minOccurs="0"
+                                            maxOccurs="unbounded"/>
+                                </sequence>
+                            </complexType>
+                        </element>
+                    </sequence>
+                </extension>
+            </complexContent>
+        </complexType>
+        
+        <complexType name="BaseMotoEquipment">
+            <complexContent>
+                <extension base="tns:MotoEquipment">
+                    <attribute name="size" type="string" use="optional"/>
+                    <attribute name="gender-style" use="optional" default="Y">
+                        <simpleType>
+                            <restriction base="string">
+                                <enumeration value="Y"></enumeration>
+                                <enumeration value="M"></enumeration>
+                                <enumeration value="W"></enumeration>
+                                <enumeration value="CH"></enumeration>
+                            </restriction>
+                        </simpleType>
+                    </attribute>
+                </extension>
+            </complexContent>
+        </complexType>
+        
+        <complexType name="MainEquip">
+            <complexContent>
+                <extension base="tns:BaseMotoEquipment">
+                    <sequence>
+                        <element name="moto-type" default="COMMON">
+                            <simpleType>
+                                <restriction base="string">
+                                    <enumeration value="TURIST"></enumeration>
+                                    <enumeration value="SPORT"></enumeration>
+                                    <enumeration value="ENDURO"></enumeration>
+                                    <enumeration value="CROSS"></enumeration>
+                                    <enumeration value="STUNT"></enumeration>
+                                    <enumeration value="COMMON"></enumeration>
+                                </restriction>
+                            </simpleType>
+                        </element>
+                    </sequence>
+                </extension>
+            </complexContent>
+        </complexType>
+        
+        <complexType name="AdditionalEquip">
+            <complexContent>
+                <extension base="tns:BaseMotoEquipment">
+                    <sequence>
+                        <element name="season">
+                            <simpleType>
+                                <restriction base="string">
+                                    <enumeration value="SPRING"></enumeration>
+                                    <enumeration value="SUMMER"></enumeration>
+                                    <enumeration value="AUTUMN"></enumeration>
+                                    <enumeration value="WINTER"></enumeration>
+                                </restriction>
+                            </simpleType>
+                        </element>
+                    </sequence>
+                </extension>
+            </complexContent>
+        </complexType>
+        
+        <complexType name="BodyProtection">
+            <complexContent>
+                <extension base="tns:MainEquip">
+                    <sequence>
+                        <element name="protection-material" type="string"></element>
+                    </sequence>
+                </extension>
+            </complexContent>
+        </complexType>
+        
+        <complexType name="BuiltInBodyProtection">
+            <complexContent>
+                <extension base="tns:BodyProtection">
+                    <sequence>
+                        <element name="waterproof" type="boolean"></element>
+                        <element name="perforation" type="boolean"></element>
+                        <element name="insulation" type="boolean"></element>
+                    </sequence>
+                </extension>
+            </complexContent>
+        </complexType>
+        
+        <complexType name="SeparateBodyProtection">
+            <complexContent>
+                <extension base="tns:BodyProtection">
+                    <sequence>
+                        <element name="mount-type" type="string"></element>
+                    </sequence>
+                </extension>
+            </complexContent>
+        </complexType>
+        
+        <complexType name="Jacket">
+            <complexContent>
+                <extension base="tns:BuiltInBodyProtection">
+                    <sequence>
+                        <element name="back-insert" type="boolean"></element>
+                        <element name="elbows-insert" type="boolean"></element>
+                        <element name="shoulders-insert" type="boolean"></element>
+                    </sequence>
+                </extension>
+            </complexContent>
+        </complexType>
+        
+        <complexType name="Pants">
+            <complexContent>
+                <extension base="tns:BuiltInBodyProtection">
+                    <sequence>
+                        <element name="hip-insert" type="boolean"></element>
+                        <element name="knee-insert" type="boolean"></element>
+                        <element name="slider-mount" type="boolean"></element>
+                    </sequence>
+                </extension>
+            </complexContent>
+        </complexType>
+        
+        <complexType name="Gloves">
+            <complexContent>
+                <extension base="tns:BuiltInBodyProtection">
+                    <sequence>
+                        <element name="palm-protect" type="boolean"></element>
+                        <element name="fingers-protect" type="boolean"></element>
+                        <element name="knuckles-protect" type="boolean"></element>
+                    </sequence>
+                </extension>
+            </complexContent>
+        </complexType>
+        
+        <complexType name="ArmorJacket">
+            <complexContent>    
+                <extension base="tns:SeparateBodyProtection">
+                    <sequence>
+                        <element name="back-protect" type="boolean"></element>
+                        <element name="chest-protect" type="boolean"></element>
+                        <element name="elbows-protect" type="boolean"></element>
+                        <element name="shoulders-protect" type="boolean"></element>
+                    </sequence>
+                </extension>
+            </complexContent>  
+        </complexType>
+        
+        <complexType name="ElbowProtector">
+            <complexContent>
+                <extension base="tns:SeparateBodyProtection">
+                    <sequence>
+                        <element name="articulated"  type="boolean"></element>
+                    </sequence>
+                </extension>
+            </complexContent>
+        </complexType>
+        
+        <complexType name="KneeProtector">
+            <complexContent>
+                <extension base="tns:SeparateBodyProtection">
+                    <sequence>
+                        <element name="articulated"  type="boolean"></element>
+                    </sequence>
+                </extension>
+            </complexContent>
+        </complexType>
+        
+        <complexType name="Helmet">
+            <complexContent>
+                <extension base="tns:MainEquip">
+                    <sequence>
+                        <element name="shell-material" type="string"></element>
+                        <element name="insert-material" type="string"></element>
+                        <element name="vents" type="integer"></element>
+                        <element name="sun-visor" type="boolean"></element>
+                        <element name="headset-connector" type="boolean"></element>
+                        <element name="admission-gp" type="boolean"></element>
+                    </sequence>
+                    <attribute name="helmet-type" use="required">
+                        <simpleType>
+                            <restriction base="string">
+                                <enumeration value="INTEGRAL"/>
+                                <enumeration value="MODULAR"/>
+                                <enumeration value="JET"/>
+                                <enumeration value="CROSS"/>
+                                <enumeration value="ENDURO"/>
+                            </restriction>
+                        </simpleType>
+                    </attribute>
+                </extension>
+            </complexContent>
+        </complexType>
+        
+        <complexType name="Shoes">
+            <complexContent>
+                <extension base="tns:MainEquip">
+                    <sequence>
+                        <element name="sole-material" type="string"></element>
+                        <element name="protection-material" type="string"></element>
+                        <element name="mount-type" type="string"></element>
+                    </sequence>
+                </extension>
+            </complexContent>
+        </complexType>
+        
+        <complexType name="Termolinen">
+            <complexContent>
+                <extension base="tns:AdditionalEquip">
+                    <sequence>
+                        <element name="elastic" type="boolean"></element>
+                        <element name="seamless" type="boolean"></element>
+                    </sequence>
+                    <attribute name="clothes-type" use="required">
+                        <simpleType>
+                            <restriction base="string">
+                                <enumeration value="socks"></enumeration>
+                                <enumeration value="tshirt"></enumeration>
+                                <enumeration value="jumper"></enumeration>
+                                <enumeration value="shorts"></enumeration>
+                                <enumeration value="pants"></enumeration>
+                            </restriction>
+                        </simpleType>
+                    </attribute>
+                </extension>
+            </complexContent>
+        </complexType>
+        
+        <complexType name="Slicker">
+            <complexContent>
+                <extension base="tns:AdditionalEquip">
+                    <sequence>
+                        <element name="separate" type="boolean"></element>
+                        <element name="fluorescent" type="boolean"></element>
+                        <element name="hood" type="boolean"></element>
+                    </sequence>
+                </extension>
+            </complexContent>
+        </complexType>
+        
+        <complexType name="Balaclava">
+            <complexContent>
+                <extension base="tns:AdditionalEquip">
+                    <sequence>
+                        <element name="seamless" type="boolean"></element>
+                    </sequence>
+                </extension>
+            </complexContent>
+        </complexType>
+        
+        <complexType name="ProtectorInsert">
+            <complexContent>
+                <extension base="tns:SpecialMotoEquipment">
+                    <attribute name="body-part" use="required">
+                        <simpleType>
+                            <restriction base="string">
+                                <enumeration value="back"></enumeration>
+                                <enumeration value="elbows"></enumeration>
+                                <enumeration value="shoulders"></enumeration>
+                                <enumeration value="chest"></enumeration>
+                                <enumeration value="hip"></enumeration>
+                                <enumeration value="knee"></enumeration>
+                            </restriction>
+                        </simpleType>
+                    </attribute>
+                </extension>
+            </complexContent>
+        </complexType>
+        
+        <complexType name="Sliders">
+            <complexContent>
+                <extension base="tns:SpecialMotoEquipment">
+                    <sequence>
+                        <element name="has-picture" type="boolean"></element>
+                    </sequence>
+                </extension>
+            </complexContent>
+        </complexType>
+        
+        <complexType name="Visor">
+            <complexContent>
+                <extension base="tns:SpecialMotoEquipment">
+                    <sequence>
+                        <element name="antiblick" type="boolean"></element>
+                        <element name="antifog" type="boolean"></element>
+                        <element name="pinlock" type="boolean"></element>
+                    </sequence>
+                </extension>
+            </complexContent>
+        </complexType>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    </schema>
