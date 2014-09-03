@@ -84,7 +84,7 @@ public class ParsServlet extends HttpServlet {
             
             RespParse resp = new RespParse(request, response);
             resp.processRequest(xmlFileLocation);
-            request.getRequestDispatcher("result.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/jsp/result.jsp").forward(request, response);
             
         } catch (ProjectException ex) {
             request.getRequestDispatcher("index.jsp").forward(request, response);

@@ -34,8 +34,7 @@ table {
 }
 
 #main { 
-    background: url("images/fon.jpg") ;
-   
+    background: url("../images/fon.jpg") ;
     height: auto;
 }
 

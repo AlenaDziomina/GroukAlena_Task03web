@@ -9,7 +9,7 @@
         </init-param>
         <init-param>
             <param-name>resource-xml-location</param-name>
-            <param-value>/resource/equip_test.xml</param-value>
+            <param-value>/WEB-INF/resource/equip_test.xml</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>
@@ -23,18 +23,18 @@
     </session-config>
     <error-page>
         <error-code>404</error-code>
-        <location>/error404.jsp</location>
+        <location>/WEB-INF/jsp/error404.jsp</location>
     </error-page>
     <error-page>
         <exception-type>by.epam.task03.ProjectExceptions.NullInitException</exception-type>
-        <location>/error.jsp</location>
+        <location>/WEB-INF/jsp/error.jsp</location>
     </error-page>
     <jsp-config>
         <jsp-property-group>
             <description>Header and footer settings</description>
             <display-name>main</display-name>
-            <url-pattern>/result.jsp</url-pattern>
             <url-pattern>/index.jsp</url-pattern>
+            <url-pattern>/WEB-INF/jsp/result.jsp</url-pattern>
             <include-prelude>/WEB-INF/jspf/header.jspf</include-prelude>
             <include-coda>/WEB-INF/jspf/footer.jspf</include-coda>
         </jsp-property-group>
