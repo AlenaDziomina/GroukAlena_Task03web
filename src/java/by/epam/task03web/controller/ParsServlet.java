@@ -8,12 +8,15 @@ package by.epam.task03web.controller;
 
 import by.epam.task03.exeption.ProjectException;
 import by.epam.task03.logic.RespParse;
+import java.io.File;
 import java.io.IOException;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
@@ -22,15 +25,48 @@ import org.apache.log4j.PropertyConfigurator;
  * @author Helena.Grouk
  */
 public class ParsServlet extends HttpServlet {
-    static final String LOG_PROPERTIES_FILE = "/resource/Log4J.properties";
-    static final String XML_FILE = "/resource/equip_test.xml";
-    static {
-        
-        String path = System.getProperty("user.home")+"/NetBeansProjects/Task03web/";
-        PropertyConfigurator.configure(path+LOG_PROPERTIES_FILE);
-    }
-    public static Logger localLog = Logger.getLogger("localLoger");
+    
+    private static String xmlFileLocation;
+    public static final Logger localLog = Logger.getLogger("localLoger");
 
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+		System.out.println("Log4JInitServlet is initializing log4j");
+		String log4jLocation = config.getInitParameter("log4j-properties-location");
+
+		ServletContext sc = config.getServletContext();
+                String realPath = sc.getRealPath("/");
+		if (log4jLocation == null) {
+			System.err.println("*** No log4j-properties-location init param, so initializing log4j with BasicConfigurator");
+			BasicConfigurator.configure();
+		} else {
+			String log4jProp = realPath + log4jLocation;
+			File propFile = new File(log4jProp);
+			if (propFile.exists()) {
+				System.out.println("Initializing log4j with: " + log4jProp);
+				PropertyConfigurator.configure(log4jProp);
+			} else {
+				System.err.println("*** " + log4jProp + " file not found, so initializing log4j with BasicConfigurator");
+				BasicConfigurator.configure();
+			}
+		}     
+                
+                String xmlLocation = config.getInitParameter("resource-xml-location");
+                if (xmlLocation == null) {
+                    throw new ServletException("Resource file not initialized.");
+                } else {
+                    File xmlFile = new File(realPath + xmlLocation);
+                    if (!xmlFile.exists()) {
+                        throw new ServletException("Resource file not found.");
+                    } else {
+                        xmlFileLocation = realPath + xmlLocation;
+                    }
+                }
+                
+		super.init(config);
+	}
+    
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,15 +78,12 @@ public class ParsServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-   
-        ServletContext sc = getServletContext();
-        String str = sc.getRealPath(LOG_PROPERTIES_FILE);
-        String str2 = sc.getRealPath(XML_FILE);
+        
         
         try {
             
             RespParse resp = new RespParse(request, response);
-            resp.processRequest(str2);
+            resp.processRequest(xmlFileLocation);
             request.getRequestDispatcher("result.jsp").forward(request, response);
             
         } catch (ProjectException ex) {

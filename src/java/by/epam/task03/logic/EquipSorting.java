@@ -20,14 +20,9 @@ public class EquipSorting {
     public static List<?> sortEquip(List<?> list, String param) 
             throws ProjectException {
         
-        if (list == null) {
-            throw new ProjectException("EquipSorting: list == null.");
+        if (list == null || list.isEmpty()) {
+            throw new ProjectException("EquipSorting: list == null or empty.");
         }
-        
-        if (list.isEmpty()) {
-            throw new ProjectException("EquipSorting: list is empty.");
-        }
-        
         if (param == null) {
             throw new ProjectException("EquipSorting: param == null.");
         }

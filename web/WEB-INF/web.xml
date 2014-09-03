@@ -3,6 +3,14 @@
     <servlet>
         <servlet-name>ParsServlet</servlet-name>
         <servlet-class>by.epam.task03web.controller.ParsServlet</servlet-class>
+        <init-param>
+            <param-name>log4j-properties-location</param-name>
+            <param-value>/WEB-INF/Log4J.properties</param-value>
+        </init-param>
+        <init-param>
+            <param-name>resource-xml-location</param-name>
+            <param-value>/resource/equip_test.xml</param-value>
+        </init-param>
     </servlet>
     <servlet-mapping>
         <servlet-name>ParsServlet</servlet-name>

@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 
-package by.epam.task03.logic;
+package by.epam.task03.logic.factory;
 
+import by.epam.task03.logic.EquipFactory;
 import by.epam.task03.exeption.EntityInitException;
 import by.epam.task03.exeption.ProjectException;
 import by.epam.task03.entity.MotoEquip;
